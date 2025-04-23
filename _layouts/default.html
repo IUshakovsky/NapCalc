@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% if page.title %}{{ page.title }} | TinyRests{% else %}TinyRests - Toddler Nap Schedule Calculator{% endif %}</title>
+  <!-- Custom favicon with our color scheme -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%233b82f6%22 /><path d=%22M25,40 L25,65 A25,25 0 0,0 75,65 L75,40 L67,40 L67,60 A17,17 0 0,1 33,60 L33,40 Z%22 fill=%22white%22 /><path d=%22M40,65 L60,65 L60,70 L40,70 Z%22 fill=%22white%22 /><path d=%22M40,30 L60,30 L60,40 L40,40 Z%22 fill=%22white%22 /></svg>">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
+  {% seo %}
+  <!-- Open Graph Meta Tags for better sharing -->
+  <meta property="og:title" content="{% if page.title %}{{ page.title }} | TinyRests{% else %}TinyRests - Toddler Nap Schedule Calculator{% endif %}">
+  <meta property="og:description" content="Perfect rest times for tiny humans - free calculator for optimal toddler nap schedules based on age and wake windows.">
+  <meta property="og:image" content="{{ '/assets/img/og-image.jpg' | absolute_url }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:type" content="website">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <a href="/" class="logo-link">
+            <span class="logo-icon custom-zzz">
+              <svg viewBox="0 0 100 100" width="28" height="28">
+                <circle cx="50" cy="50" r="45" fill="var(--primary)" />
+                <path d="M25,40 L25,65 A25,25 0 0,0 75,65 L75,40 L67,40 L67,60 A17,17 0 0,1 33,60 L33,40 Z" fill="white" />
+                <path d="M40,65 L60,65 L60,70 L40,70 Z" fill="white" />
+                <path d="M40,30 L60,30 L60,40 L40,40 Z" fill="white" />
+              </svg>
+            </span>
+            <span class="logo-text">TinyRests</span>
+          </a>
+        </div>
+        <div class="tagline">Perfect rest times for tiny humans</div>
+        <div class="theme-toggle">
+          <span class="mode-icon light-icon">☀️</span>
+          <label class="switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="slider round"></span>
+          </label>
+          <span class="mode-icon dark-icon">🌙</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container main-content">
+    {{ content }}
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-muted py-4 site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <div class="privacy-notice">This calculator is free and private — no data is collected or stored.</div>
+          <div class="footer-links mt-2">
+            <a href="/privacy.html" class="footer-link">Privacy</a>
+            <a href="/terms.html" class="footer-link">Terms</a>
+            <a href="mailto:salmorejo2024@outlook.com" class="footer-link">Contact</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="footer-tagline">Made with 💙 for tired parents</div>
+          <div class="copyright">© 2025 TinyRests</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="{{ '/assets/js/script.js' | relative_url }}"></script>
+  
+  <!-- Dark Mode Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      const htmlElement = document.documentElement;
+      
+      // Check for saved theme preference or use device preference
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      // Set initial state
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        htmlElement.classList.add('dark-mode');
+        darkModeToggle.checked = true;
+      }
+      
+      // Toggle theme on switch change
+      darkModeToggle.addEventListener('change', function() {
+        if (this.checked) {
+          htmlElement.classList.add('dark-mode');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          htmlElement.classList.remove('dark-mode');
+          localStorage.setItem('theme', 'light');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

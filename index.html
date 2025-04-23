@@ -1,0 +1,92 @@
+---
+layout: default
+title: Nap Schedule Calculator
+---
+
+<div class="calculator-card">
+  <div class="title">Nap Schedule Calculator for Toddlers</div>
+
+  <form id="napForm">
+    <div class="mb-3">
+      <label for="age" class="form-label">Toddler's Age</label>
+      <select id="age" class="form-select" required>
+        <option value="">Select age range</option>
+        <option value="3">0–3 months</option>
+        <option value="6">4–8 months</option>
+        <option value="9">9–12 months</option>
+        <option value="15">13–17 months</option>
+        <option value="18">18–24 months</option>
+        <option value="30">25–30 months</option>
+        <option value="36">31–36 months</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="wakeTime" class="form-label">Wake-up Time</label>
+      <input type="time" id="wakeTime" class="form-control" required/>
+    </div>
+
+    <div class="mb-3">
+      <label for="bedTime" class="form-label">Desired Bedtime</label>
+      <input type="time" id="bedTime" class="form-control" required/>
+    </div>
+
+    <div class="mb-3">
+      <label for="napCount" class="form-label">Preferred Number of Naps (optional)</label>
+      <input type="number" id="napCount" class="form-control" min="1" max="4" placeholder="Leave blank for auto"/>
+    </div>
+
+    <div class="mb-3">
+      <label for="napLength" class="form-label">Average Nap Length (minutes, optional)</label>
+      <input type="number" id="napLength" class="form-control" min="20" max="180" placeholder="e.g., 90"/>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Calculate Nap Schedule</button>
+  </form>
+
+  <div id="output" class="output-box d-none mt-4"></div>
+</div>
+
+<div class="faq-section">
+  <h5>Frequently Asked Questions</h5>
+  <div class="faq-item">
+    <div class="faq-question">How is the nap schedule calculated?</div>
+    <div class="faq-answer">We calculate age-appropriate wake windows and suggest nap durations to help spread naps evenly between wake-up and bedtime.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">What is a wake window?</div>
+    <div class="faq-answer">A wake window is the period a child can be awake before needing to sleep again. It helps avoid overtiredness and supports better sleep.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">Do all babies follow the same schedule?</div>
+    <div class="faq-answer">No, every baby is different. Our calculator gives general guidance, but it's okay to adjust based on your child's behavior and needs.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">Can I use this calculator daily?</div>
+    <div class="faq-answer">Yes! You can use it every day, especially when your toddler's sleep patterns are changing or if you want to try a new schedule.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">What if my baby wakes up earlier than planned?</div>
+    <div class="faq-answer">It's common. You can adjust the schedule by shortening the wake window slightly, or shift the entire schedule accordingly.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">How do I transition my child from two naps to one?</div>
+    <div class="faq-answer">Gradually shift to a later morning nap, extending the first wake window. When your child can comfortably stay awake for about 5 hours, they may be ready for one nap. The transition usually happens between 15-18 months.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">Why is my toddler fighting naps?</div>
+    <div class="faq-answer">This could be due to several factors: inappropriate timing (too early or late), developmental milestones, separation anxiety, or readiness to drop a nap. Try adjusting wake windows using our calculator.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">How long should my baby's naps be?</div>
+    <div class="faq-answer">Ideally, naps should be at least 45 minutes to complete one sleep cycle. For babies 4+ months, aim for 1-2 hour naps. Younger babies may have shorter, more frequent naps.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">Should I wake my baby from a nap?</div>
+    <div class="faq-answer">Generally, it's best to let babies wake naturally. However, if long naps interfere with bedtime or other naps, it might be reasonable to wake them. Our calculator helps balance nap duration with overall sleep needs.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">Does the calculator account for night sleep?</div>
+    <div class="faq-answer">The calculator focuses on daytime nap scheduling, using wake-up time and bedtime as anchors. Most children need 10-12 hours of night sleep, which this schedule helps support by preventing overtiredness during the day.</div>
+  </div>
+</div>
