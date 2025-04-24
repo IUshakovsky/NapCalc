@@ -10,13 +10,31 @@ function formatTime(totalMinutes) {
   return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
 }
 
+// Function to get the site's baseurl
+function getSiteBaseUrl() {
+  // Get the path part of the current URL and match it against the site structure
+  // This allows the site to work both locally and on GitHub Pages
+  const pathArray = window.location.pathname.split('/');
+  if (pathArray[1] === 'NapCalc') {
+    return '/NapCalc'; // We're on GitHub Pages
+  }
+  return ''; // We're running locally
+}
+
 // Function to generate a shareable URL with encoded parameters
 function generateShareableUrl(params) {
-  const baseUrl = window.location.href.split('?')[0];
+  // Get the host and protocol
+  const hostname = window.location.protocol + '//' + window.location.host;
+  
+  // Get the path to the site root (handling GitHub Pages case)
+  const baseUrl = hostname + getSiteBaseUrl() + '/';
+  
+  // Build the query string from parameters
   const queryString = Object.keys(params)
     .filter(key => params[key] !== null && params[key] !== undefined && params[key] !== '')
     .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
     .join('&');
+  
   return `${baseUrl}?${queryString}`;
 }
 
