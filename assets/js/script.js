@@ -15,8 +15,8 @@ function getSiteBaseUrl() {
   // Get the path part of the current URL and match it against the site structure
   // This allows the site to work both locally and on GitHub Pages
   const pathArray = window.location.pathname.split('/');
-  if (pathArray[1] === 'TinyRests') {
-    return '/TinyRests'; // We're on GitHub Pages
+  if (pathArray[1] === 'NapCalc') {
+    return '/NapCalc'; // We're on GitHub Pages with correct repository name
   }
   return ''; // We're running locally
 }
