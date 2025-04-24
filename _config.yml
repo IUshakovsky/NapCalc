@@ -26,6 +26,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Adjust times based on age, wake-up time, and bedtime to get a customized daily nap plan.
 baseurl: "/NapCalc" # the subpath of your site, which is your repository name (case sensitive)
 url: "https://iushakovsky.github.io" # your GitHub Pages URL
+production_url: https://iushakovsky.github.io/NapCalc
 github_username: napcalc
 
 # SEO settings
