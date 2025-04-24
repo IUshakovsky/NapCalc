@@ -333,19 +333,52 @@ select.form-select {
   -webkit-appearance: none;
   -moz-appearance: none;
   background-color: var(--card-bg);
-  border: 2px solid var(--primary);
+  border: 2px solid var(--border-color);
   border-radius: 12px;
   padding: 0.75rem 2.5rem 0.75rem 1rem;
   font-size: 1.1rem;
   color: var(--dark-text);
   font-weight: 600;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='%233b82f6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   background-size: 18px 14px;
-  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  transition: all 0.3s var(--animation-timing);
   cursor: pointer;
+}
+
+/* Custom styling for age selector */
+.age-selector {
+  position: relative;
+  display: block;
+}
+
+.age-selector .form-select-lg {
+  height: auto;
+  padding: 0.875rem 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--dark-text);
+  background-color: var(--card-bg);
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='%233b82f6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>");
+  background-position: right 1.2rem center;
+  background-size: 1.2rem;
+  border: 2px solid var(--primary-light);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+.age-selector .form-select-lg:hover {
+  border-color: var(--primary);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.15);
+  transform: translateY(-1px);
+}
+
+.age-selector .form-select-lg:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25);
+  outline: 0;
 }
 
 select.form-select:disabled {

@@ -8,17 +8,19 @@ title: Nap Schedule Calculator
 
   <form id="napForm">
     <div class="mb-3">
-      <label for="age" class="form-label">Toddler's Age</label>
-      <select id="age" class="form-select" required>
-        <option value="">Select age range</option>
-        <option value="3">0–3 months</option>
-        <option value="6">4–8 months</option>
-        <option value="9">9–12 months</option>
-        <option value="15">13–17 months</option>
-        <option value="18">18–24 months</option>
-        <option value="30">25–30 months</option>
-        <option value="36">31–36 months</option>
-      </select>
+      <label class="form-label">Toddler's Age</label>
+      <div class="age-selector rounded">      
+        <select id="age" class="form-select form-select-lg custom-select" required aria-label="Age selection dropdown">
+          <option value="" selected>Select age range</option>
+          <option value="3">0–3 months</option>
+          <option value="6">4–8 months</option>
+          <option value="9">9–12 months</option>
+          <option value="15">13–17 months</option>
+          <option value="18">18–24 months</option>
+          <option value="30">25–30 months</option>
+          <option value="36">31–36 months</option>
+        </select>
+      </div>
     </div>
 
     <div class="mb-3">
