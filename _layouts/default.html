@@ -11,11 +11,17 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
   {% seo %}
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{% if page.title %}{{ page.title }} | TinyRests{% else %}TinyRests - Toddler Nap Schedule Calculator{% endif %}">
+  <meta name="twitter:description" content="Perfect rest times for tiny humans - free calculator for optimal toddler nap schedules based on age and wake windows.">
+  <meta name="twitter:image" content="{{ '/assets/img/og-image.jpg' | absolute_url }}">
   <!-- Open Graph Meta Tags for better sharing -->
   <meta property="og:title" content="{% if page.title %}{{ page.title }} | TinyRests{% else %}TinyRests - Toddler Nap Schedule Calculator{% endif %}">
   <meta property="og:description" content="Perfect rest times for tiny humans - free calculator for optimal toddler nap schedules based on age and wake windows.">
-  <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/assets/img/og-image.jpg">
-  <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
+  <meta property="og:image" content="{{ '/assets/img/og-image.jpg' | absolute_url }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
   <meta property="og:type" content="website">
 </head>
 <body>
