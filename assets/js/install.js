@@ -2,13 +2,17 @@ let deferredPrompt;
 const installButton = document.getElementById('installApp');
 const installContainer = document.getElementById('installContainer');
 
-// Hide the install button initially
+// Development mode - set to true to force show the install button
+const devMode = false;
+
+// Hide the install button initially (unless in dev mode)
 if (installContainer) {
-  installContainer.style.display = 'none';
+  installContainer.style.display = devMode ? 'block' : 'none';
 }
 
 // Check if the browser supports PWA installation
 window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('beforeinstallprompt event fired');
   // Prevent Chrome 67 and earlier from automatically showing the prompt
   e.preventDefault();
   // Stash the event so it can be triggered later
@@ -19,21 +23,28 @@ window.addEventListener('beforeinstallprompt', (e) => {
   }
 });
 
+// If dev mode is enabled, show the button always for testing purposes
+if (devMode && installContainer) {
+  installContainer.style.display = 'block';
+}
+
 // Handle the install button click
 if (installButton) {
-  installButton.addEventListener('click', async () => {
-    if (!deferredPrompt) {
-      return;
-    }
-    // Show the install prompt
-    deferredPrompt.prompt();
-    // Wait for the user to respond to the prompt
-    const { outcome } = await deferredPrompt.userChoice;
-    // We no longer need the prompt
-    deferredPrompt = null;
-    // Hide the install button
-    if (installContainer) {
-      installContainer.style.display = 'none';
+  installButton.addEventListener('click', (e) => {
+    // Show the prompt
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      // Wait for the user to respond to the prompt
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+          // Hide button after installation
+          installContainer.style.display = 'none';
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+        deferredPrompt = null;
+      });
     }
   });
 }

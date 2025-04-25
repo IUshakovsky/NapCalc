@@ -235,45 +235,108 @@ html.dark-mode .custom-zzz svg circle {
 
 /* Footer Styles */
 .site-footer {
-  background-color: var(--header-bg);
-  border-top: 1px solid var(--border-color);
+  background-color: #f8fafc;
+  border-top: 1px solid #e2e8f0;
   padding: 2rem 0;
   margin-top: auto;
   font-size: 0.9rem;
   transition: background-color 0.3s ease;
-  color: var(--medium-text);
+}
+
+.privacy-notice {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.footer-tagline {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
 }
 
 .footer-links {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 1.5rem;
-  margin-top: 0.8rem;
 }
 
 .footer-link {
-  color: var(--primary);
+  color: var(--secondary);
+  font-size: 0.85rem;
   text-decoration: none;
-  transition: color 0.2s;
 }
 
 .footer-link:hover {
-  color: var(--primary-dark);
+  color: var(--primary);
   text-decoration: underline;
 }
 
-.footer-tagline {
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: var(--dark-text);
-}
-
 .copyright {
-  color: var(--medium-text);
+  font-size: 0.85rem;
+  color: var(--text-muted);
 }
 
 .privacy-notice {
   color: var(--dark-text);
+}
+
+/* Installation button styling */
+.install-button {
+  border-radius: 12px;
+  padding: 0.3rem 0.8rem;
+  font-weight: 500;
+  font-size: 0.8rem;
+  text-transform: none;
+  letter-spacing: 0;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.15);
+  transition: all 0.3s var(--animation-timing);
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.install-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(59, 130, 246, 0.25);
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+@media (max-width: 768px) {
+  .install-button {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    margin: 0.5rem 0;
+  }
+  
+  .footer-tagline, .copyright {
+    font-size: 0.85rem;
+  }
+  
+  .site-footer .row {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .site-footer .col-md-5:nth-child(1) {
+    order: 1;
+  }
+  
+  .site-footer #installContainer {
+    order: 3;
+    margin-top: 1rem;
+  }
+  
+  .site-footer .col-md-5:nth-child(3) {
+    order: 2;
+    margin: 1rem 0;
+  }
+  
+  .text-md-end, .text-md-start {
+    text-align: center !important;
+  }
 }
 
 .calculator-card {
