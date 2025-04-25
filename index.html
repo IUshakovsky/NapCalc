@@ -9,17 +9,22 @@ title: Nap Schedule Calculator
   <form id="napForm">
     <div class="mb-3">
       <label class="form-label">Toddler's Age</label>
-      <div class="age-selector rounded">      
-        <select id="age" class="form-select form-select-lg custom-select" required aria-label="Age selection dropdown">
-          <option value="" selected>Select age range</option>
-          <option value="3">0–3 months</option>
-          <option value="6">4–8 months</option>
-          <option value="9">9–12 months</option>
-          <option value="15">13–17 months</option>
-          <option value="18">18–24 months</option>
-          <option value="30">25–30 months</option>
-          <option value="36">31–36 months</option>
-        </select>
+      <div class="dropdown age-dropdown">
+        <button class="btn dropdown-toggle w-100" type="button" id="ageDropdownButton" aria-expanded="false">
+          <span id="selectedAgeText">Select age range</span>
+        </button>
+        <ul class="dropdown-menu w-100" aria-labelledby="ageDropdownButton">
+          <li><a class="dropdown-item" href="#" data-value="">Select age range</a></li>
+          <li><a class="dropdown-item" href="#" data-value="3">0–3 months</a></li>
+          <li><a class="dropdown-item" href="#" data-value="6">4–8 months</a></li>
+          <li><a class="dropdown-item" href="#" data-value="9">9–12 months</a></li>
+          <li><a class="dropdown-item" href="#" data-value="15">13–17 months</a></li>
+          <li><a class="dropdown-item" href="#" data-value="18">18–24 months</a></li>
+          <li><a class="dropdown-item" href="#" data-value="30">25–30 months</a></li>
+          <li><a class="dropdown-item" href="#" data-value="36">31–36 months</a></li>
+        </ul>
+        <!-- Hidden input for form submission -->
+        <input type="hidden" name="age" id="age" required>  
       </div>
     </div>
 
