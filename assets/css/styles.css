@@ -674,39 +674,66 @@ html.dark-mode .timeline-list li::before {
   }
 }
 
-/* Specialized button styles */
+/* Specialized button styles - updated to match TinyRests branding */
 .print-btn {
-  border-color: var(--secondary);
-  color: var(--secondary-dark);
+  border-color: var(--primary);
+  color: var(--primary-dark);
+  background-color: rgba(59, 130, 246, 0.05);
 }
 
 .print-btn:hover {
-  border-color: var(--secondary-dark);
-  color: var(--secondary-dark);
-  background-color: rgba(20, 184, 166, 0.05);
+  border-color: var(--primary-dark);
+  color: white;
+  background-color: var(--primary);
 }
 
 .print-btn i {
-  color: var(--secondary);
+  color: var(--primary);
+}
+
+.print-btn:hover i {
+  color: white;
 }
 
 .copy-btn {
-  border-color: var(--accent);
-  color: var(--accent-dark);
+  border-color: var(--primary);
+  color: var(--primary-dark);
+  background-color: rgba(59, 130, 246, 0.1);
 }
 
 .copy-btn:hover {
-  border-color: var(--accent-dark);
-  color: var(--accent-dark);
-  background-color: rgba(236, 72, 153, 0.05);
+  border-color: var(--primary-dark);
+  color: white;
+  background-color: var(--primary-dark);
 }
 
 .copy-btn i {
-  color: var(--accent);
+  color: var(--primary);
+}
+
+.copy-btn:hover i {
+  color: white;
+}
+
+/* Share button styling - updated to match TinyRests branding */
+.action-btn:not(.print-btn):not(.copy-btn) {
+  border-color: var(--primary);
+  color: var(--primary-dark);
+  background-color: rgba(59, 130, 246, 0.15);
+}
+
+.action-btn:not(.print-btn):not(.copy-btn):hover {
+  border-color: var(--primary-dark);
+  color: white;
+  background-color: var(--primary-dark);
 }
 
 .action-btn:not(.print-btn):not(.copy-btn) i {
   color: var(--primary);
+}
+
+.action-btn:not(.print-btn):not(.copy-btn):hover i {
+  color: white;
 }
 
 .copy-feedback {
@@ -714,18 +741,26 @@ html.dark-mode .timeline-list li::before {
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--dark-text);
+  background-color: var(--primary);
   color: white;
   padding: 0.8rem 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
   z-index: 1000;
   opacity: 0;
   transition: opacity 0.3s ease;
+  font-weight: 500;
 }
 
 .copy-feedback.show {
   opacity: 1;
+}
+
+/* Dark mode copy feedback */
+html.dark-mode .copy-feedback {
+  background-color: var(--primary-dark);
+  color: white;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
 }
 
 /* Share options styling */

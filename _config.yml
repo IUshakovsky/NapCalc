@@ -38,7 +38,7 @@ logo: /assets/images/logo.png
 social:
   name: TinyRests
   links:
-    - https://twitter.com/tinyrests
+    # - https://twitter.com/tinyrests
     - https://github.com/napcalc
 webmaster_verifications:
   google: # Add your Google verification code here
