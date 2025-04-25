@@ -185,8 +185,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const napStart = current;
       const napEnd = napStart + napLength;
 
-      if (napEnd >= bedMinutes) {
-        warning = `<div class='text-danger'><strong>Warning:</strong> Last nap overlaps or is too close to bedtime.</div>`;
+      // Handle day boundary crossing when comparing nap end time with bedtime
+      const normalizedNapEnd = (napEnd % 1440);
+      const napToBedDistance = (bedMinutes - normalizedNapEnd + 1440) % 1440;
+      
+      // Only warn if the nap ends within 90 minutes of bedtime or after bedtime
+      if (napToBedDistance < 90) {
+        warning = `<div class='text-danger'><strong>Warning:</strong> Last nap is too close to bedtime. Naps should end at least 90 minutes before bedtime.</div>`;
         break;
       }
 
