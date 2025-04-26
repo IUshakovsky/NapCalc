@@ -8,7 +8,7 @@ layout: none
   "start_url": "{{ site.baseurl }}/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#3b82f6",
+  "theme_color": "#8b5cf6",
   "icons": [
     {
       "src": "{{ site.baseurl }}/assets/icons/icon-192x192.png",

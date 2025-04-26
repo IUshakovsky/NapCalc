@@ -4,13 +4,13 @@
 
 :root {
   /* Light mode variables */
-  --primary: #3b82f6;        /* Changed to blue */
-  --primary-dark: #2563eb;   /* Darker blue */
-  --primary-light: #93c5fd;  /* Lighter blue */
-  --secondary: #14b8a6;      /* Changed to teal */
-  --secondary-dark: #0d9488; /* Darker teal */
-  --accent: #ec4899;         /* Changed to pink */
-  --accent-dark: #db2777;    /* Darker pink */
+  --primary: #8b5cf6;        /* Main purple */
+  --primary-dark: #7c3aed;   /* Darker purple */
+  --primary-light: #a78bfa;  /* Lighter purple */
+  --secondary: #6366f1;      /* Indigo */
+  --secondary-dark: #4f46e5; /* Darker indigo */
+  --accent: #c084fc;         /* Lavender */
+  --accent-dark: #a855f7;    /* Darker lavender */
   --button-bg: #f9fafb;      /* Light gray for buttons */
   --button-text: #4b5563;    /* Dark gray for button text */
   --light-bg: #f8fafc;
@@ -28,13 +28,13 @@
 
 /* Dark mode variables */
 html.dark-mode {
-  --primary: #60a5fa;        /* Lighter blue for dark mode */
-  --primary-dark: #3b82f6;   /* Blue for dark mode */
-  --primary-light: #93c5fd;  /* Very light blue for dark mode */
-  --secondary: #2dd4bf;      /* Lighter teal for dark mode */
-  --secondary-dark: #14b8a6; /* Teal for dark mode */
-  --accent: #f472b6;         /* Lighter pink for dark mode */
-  --accent-dark: #ec4899;    /* Pink for dark mode */
+  --primary: #a78bfa;        /* Lighter purple for dark mode */
+  --primary-dark: #8b5cf6;   /* Purple for dark mode */
+  --primary-light: #c4b5fd;  /* Very light purple for dark mode */
+  --secondary: #818cf8;      /* Lighter indigo for dark mode */
+  --secondary-dark: #6366f1; /* Indigo for dark mode */
+  --accent: #d8b4fe;         /* Lighter lavender for dark mode */
+  --accent-dark: #c084fc;    /* Lavender for dark mode */
   --button-bg: #374151;      /* Dark gray for buttons in dark mode */
   --button-text: #f3f4f6;    /* Light gray for button text in dark mode */
   --light-bg: #111827;
