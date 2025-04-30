@@ -24,9 +24,9 @@ email: salmorejo2024@outlook.com
 description: >- # this means to ignore newlines until "baseurl:"
   A simple, free online calculator to create the perfect nap schedule for your toddler.
   Adjust times based on age, wake-up time, and bedtime to get a customized daily nap plan.
-baseurl: "/NapCalc" # the subpath of your site, which is your repository name (case sensitive)
-url: "https://iushakovsky.github.io" # your GitHub Pages URL
-production_url: https://iushakovsky.github.io/NapCalc
+baseurl: "" 
+url: "https://tinyrests.com" 
+production_url: https://tinyrests.com
 github_username: napcalc
 
 # SEO settings
