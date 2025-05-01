@@ -1,0 +1,54 @@
+/* Install App Button Styles */
+#installContainer {
+  transition: all 0.3s var(--animation-timing);
+  margin: 0;
+}
+
+.install-app-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s var(--animation-timing);
+  margin: 0;
+}
+
+.install-app-btn:hover {
+  background-color: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+}
+
+.install-icon {
+  font-size: 1.2em;
+  font-weight: bold;
+  line-height: 1;
+  margin-right: 2px;
+}
+
+/* Dark mode adjustments for install button */
+html.dark-mode .install-app-btn {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+html.dark-mode .install-app-btn:hover {
+  background-color: var(--primary);
+  color: var(--card-bg);
+}
+
+@media (max-width: 768px) {
+  .install-app-btn {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}
