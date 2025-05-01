@@ -29,10 +29,20 @@
 }
 
 .install-icon {
-  font-size: 1.2em;
-  font-weight: bold;
-  line-height: 1;
-  margin-right: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 4px;
+  line-height: 0;
+}
+
+.install-icon svg {
+  color: var(--primary);
+  transition: all 0.3s var(--animation-timing);
+}
+
+.install-app-btn:hover .install-icon svg {
+  color: white;
 }
 
 /* Dark mode adjustments for install button */
