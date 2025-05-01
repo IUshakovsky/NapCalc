@@ -6,8 +6,8 @@ const installContainer = document.getElementById('installContainer');
 const devMode = false;
 
 // Hide the install button initially (unless in dev mode)
-if (installContainer) {
-  installContainer.style.display = devMode ? 'block' : 'none';
+if (installButton) {
+  installButton.style.display = devMode ? 'inline-flex' : 'none';
 }
 
 // Check if the browser supports PWA installation
@@ -18,8 +18,8 @@ window.addEventListener('beforeinstallprompt', (e) => {
   // Stash the event so it can be triggered later
   deferredPrompt = e;
   // Show the install button
-  if (installContainer) {
-    installContainer.style.display = 'block';
+  if (installButton) {
+    installButton.style.display = 'inline-flex';
   }
 });
 
@@ -54,8 +54,8 @@ window.addEventListener('appinstalled', () => {
   // Clear the deferredPrompt
   deferredPrompt = null;
   // Hide the install button
-  if (installContainer) {
-    installContainer.style.display = 'none';
+  if (installButton) {
+    installButton.style.display = 'none';
   }
   // Optionally log or show a success message
   console.log('TinyRests was successfully installed');
