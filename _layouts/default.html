@@ -25,11 +25,11 @@
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{% if page.title %}{{ page.title }} | TinyRests{% else %}TinyRests - Toddler Nap Schedule Calculator{% endif %}">
-  <meta name="twitter:description" content="Perfect rest times for tiny humans - free calculator for optimal toddler nap schedules based on age and wake windows.">
+  <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}Perfect rest times for tiny humans - free calculator for optimal toddler nap schedules based on age and wake windows.{% endif %}">
   <meta name="twitter:image" content="{{ '/assets/img/og-image.jpg' | absolute_url }}">
   <!-- Open Graph Meta Tags for better sharing -->
   <meta property="og:title" content="{% if page.title %}{{ page.title }} | TinyRests{% else %}TinyRests - Toddler Nap Schedule Calculator{% endif %}">
-  <meta property="og:description" content="Perfect rest times for tiny humans - free calculator for optimal toddler nap schedules based on age and wake windows.">
+  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}Perfect rest times for tiny humans - free calculator for optimal toddler nap schedules based on age and wake windows.{% endif %}">
   <meta property="og:image" content="{{ '/assets/img/og-image.jpg' | absolute_url }}">
   <meta property="og:url" content="{{ page.url | absolute_url }}">
   <meta property="og:type" content="website">
