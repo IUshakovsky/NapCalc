@@ -1238,3 +1238,115 @@ html.dark-mode .copy-feedback {
     padding: 1.5rem;
   }
 }
+/* ===== RESPONSIVE CONTAINER FIX ===== */
+.container {
+  /* More flexible approach - won't affect existing layouts */
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 1441px) {
+  .container {
+    max-width: 1440px;
+  }
+}
+
+/* ===== TOUCH TARGET SIZE IMPROVEMENTS ===== */
+/* Make clickable elements at least 44x44px for mobile */
+.btn, 
+button,
+.dropdown-item,
+.faq-question,
+input[type="checkbox"],
+input[type="radio"],
+.action-btn,
+.faq-question::before {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Fix touch targets in dropdown menus */
+.dropdown-item {
+  padding: 12px 16px;
+}
+
+/* Better tap targets for FAQ questions */
+.faq-question {
+  padding: 12px 12px 12px 44px;
+  position: relative;
+}
+
+.faq-question::before {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.faq-question.active::before {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+/* ===== RESPONSIVE DESIGN FIXES ===== */
+/* Improve calculator card responsiveness */
+.calculator-card {
+  width: 100%;
+  max-width: 650px;
+  padding: clamp(1rem, 5vw, 2rem);
+  margin: 0 auto 3rem;
+}
+
+/* Make form controls fully responsive */
+input.form-control,
+select.form-select,
+.dropdown-toggle {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px; /* Prevents iOS zoom on focus */
+}
+
+/* Improve FAQ section responsiveness */
+.faq-section {
+  /* Keep original width behavior but improve padding responsiveness */
+  padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+/* Better spacing on mobile */
+@media (max-width: 576px) {
+  .faq-item {
+    margin-bottom: 1rem;
+  }
+  
+  .faq-answer {
+    padding: 1rem 0.5rem 0.5rem 12px;
+  }
+  
+  .header-content {
+    padding: 0.5rem;
+  }
+  
+  /* Ensure logo and text is visible on small screens */
+  .logo-text {
+    font-size: 1.2rem;
+  }
+}
+
+/* Prevent overflow issues on smaller screens */
+@media (max-width: 576px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Fix button area for better tapping */
+.btn-primary {
+  padding: 12px 16px;
+  margin: 8px 0;
+}
