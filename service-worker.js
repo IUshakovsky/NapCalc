@@ -1,25 +1,48 @@
 // Service worker version
 const CACHE_NAME = 'tinyrests-v1';
 
-// Files to cache
+// Determine the base URL from the service worker's scope
+const getBaseUrl = () => {
+  return self.location.pathname.replace(/\/service-worker\.js$/, '');
+};
+
+// Files to cache - will be prefixed with baseUrl when caching
 const FILES_TO_CACHE = [
   '/',
   '/index.html',
-  '/assets/css/style.css',
+  '/assets/css/styles.css',
+  '/assets/css/install-button.css',
   '/assets/js/script.js',
   '/assets/js/install.js',
-  '/assets/js/custom-dropdown.js',
   '/assets/js/dropdown-selector.js',
-  // Add other assets as needed
+  '/manifest.webmanifest',
+  '/assets/icons/icon-192x192.png',
+  '/assets/icons/icon-512x512.png'
 ];
 
 // Install event - cache assets
 self.addEventListener('install', (event) => {
+  const baseUrl = getBaseUrl();
+  
+  // Add the base URL to each file path
+  const filesToCache = FILES_TO_CACHE.map(file => {
+    // Don't modify absolute URLs
+    if (file.startsWith('http')) {
+      return file;
+    }
+    // Handle the root path special case
+    if (file === '/') {
+      return baseUrl || '/';
+    }
+    // Concatenate the baseUrl with the file path (avoiding double slashes)
+    return `${baseUrl}${file}`;
+  });
+  
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('Opened cache');
-        return cache.addAll(FILES_TO_CACHE);
+        console.log('Opened cache with baseUrl:', baseUrl);
+        return cache.addAll(filesToCache);
       })
   );
   // Activate immediately
@@ -42,6 +65,21 @@ self.addEventListener('activate', (event) => {
 
 // Fetch event - serve from cache, fall back to network
 self.addEventListener('fetch', (event) => {
+  const baseUrl = getBaseUrl();
+  
+  // Skip non-GET requests and requests to other domains
+  if (event.request.method !== 'GET' || !event.request.url.startsWith(self.location.origin)) {
+    return;
+  }
+  
+  // Create a URL object from the request
+  const url = new URL(event.request.url);
+  
+  // Only handle requests for files under our baseUrl (if any)
+  if (baseUrl !== '/' && !url.pathname.startsWith(baseUrl)) {
+    return;
+  }
+  
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
