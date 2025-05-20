@@ -76,6 +76,30 @@ function getAgeRangeText(age) {
   return '31–36 months';
 }
 
+// Function to handle internal links to FAQ items
+function handleFaqLinkClick(targetId) {
+  const targetElement = document.getElementById(targetId);
+  if (targetElement) {
+    // Find the parent FAQ item
+    const faqItem = targetElement.closest('.faq-item');
+    if (faqItem) {
+      // Find the question element
+      const question = faqItem.querySelector('.faq-question');
+      // Make sure the answer is visible
+      const answer = faqItem.querySelector('.faq-answer');
+      if (answer && answer.style.display !== 'block') {
+        // Expand this FAQ
+        question.classList.add('active');
+        answer.style.display = 'block';
+      }
+      // Scroll to the answer with a slight delay to allow expansion
+      setTimeout(() => {
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   // Check for URL parameters and auto-fill form if present
   const urlParams = parseUrlParams();
@@ -106,6 +130,17 @@ document.addEventListener('DOMContentLoaded', function() {
       q.classList.toggle('active');
       const answer = q.nextElementSibling;
       answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+    });
+  });
+  
+  // Initialize internal link handlers
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const targetId = link.getAttribute('href').substring(1);
+      if (targetId) {
+        e.preventDefault();
+        handleFaqLinkClick(targetId);
+      }
     });
   });
 
