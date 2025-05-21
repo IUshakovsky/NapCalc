@@ -53,6 +53,11 @@
     .logo-link{display:flex;align-items:center;text-decoration:none;color:#1e293b}
     .logo-text{font-size:1.8rem;font-weight:800;margin-left:12px}
     .tagline{font-weight:500;color:#64748b}
+    /* Force logo text to maintain styling on mobile */
+    @media (max-width:576px){
+      .logo-text{font-size:1.8rem !important;font-weight:800 !important}
+      .header-content{flex-direction:column;text-align:center}
+    }
     .calculator-card{background:white;border-radius:16px;box-shadow:0 10px 25px -5px rgba(0,0,0,0.05);padding:2rem;margin-bottom:3rem}
   </style>
   

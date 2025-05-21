@@ -1331,9 +1331,9 @@ select.form-select,
     padding: 0.5rem;
   }
   
-  /* Ensure logo and text is visible on small screens */
-  .logo-text {
-    font-size: 1.2rem;
+  /* Keep header content properly spaced */
+  .header-content {
+    padding: 0.5rem;
   }
 }
 
