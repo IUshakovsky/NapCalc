@@ -201,12 +201,11 @@ input:checked + .slider:before {
 .logo-text {
   font-size: 1.8rem;
   font-weight: 800;
-  margin-left: 8px; /* Reduced spacing to fix gap */
+  /* No margin for tight logo spacing */
 }
 
 .logo-icon {
   font-size: 1.75rem;
-  margin-right: 0.5rem;
   vertical-align: middle;
   display: inline-flex;
   align-items: center;
