@@ -190,14 +190,18 @@ input:checked + .slider:before {
   align-items: center;
   text-decoration: none;
   color: var(--dark-text);
-  font-weight: 800;
-  font-size: 1.8rem;
   transition: all 0.3s var(--animation-timing);
 }
 
 .logo-link:hover {
   color: var(--primary);
   transform: scale(1.05);
+}
+
+.logo-text {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-left: 8px; /* Reduced spacing to fix gap */
 }
 
 .logo-icon {
