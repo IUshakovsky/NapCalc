@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Preconnect to required origins -->
+  <!-- Preconnect and preload key resources to prevent layout shifts -->
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Preload fonts to prevent layout shifts -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" as="style">  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{% if page.title %}{{ page.title }} | TinyRests{% else %}TinyRests - Toddler Nap Schedule Calculator{% endif %}</title>
   <!-- Custom favicon with our purple color scheme -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%238b5cf6%22 /><path d=%22M20,50 a30,30 0 0 1 60,0%22 fill=%22none%22 stroke=%22white%22 stroke-width=%225%22 stroke-linecap=%22round%22 /><path d=%22M30,50 a20,20 0 0 1 40,0%22 fill=%22none%22 stroke=%22white%22 stroke-width=%225%22 stroke-linecap=%22round%22 /><path d=%22M40,50 a10,10 0 0 1 20,0%22 fill=%22none%22 stroke=%22white%22 stroke-width=%225%22 stroke-linecap=%22round%22 /></svg>">
-  <!-- Bootstrap CSS - with preload for faster rendering -->
-  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"></noscript>
+  <!-- Bootstrap CSS - direct loading to prevent layout shifts -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
   
   <!-- loadCSS helper for non-render blocking CSS loading -->
   <script>
@@ -61,13 +65,9 @@
     .calculator-card{background:white;border-radius:16px;box-shadow:0 10px 25px -5px rgba(0,0,0,0.05);padding:2rem;margin-bottom:3rem}
   </style>
   
-  <!-- Non-critical CSS with loadCSS -->
-  <link rel="preload" href="{{ '/assets/css/styles.css' | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="{{ '/assets/css/install-button.css' | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/install-button.css' | relative_url }}">
-  </noscript>
+  <!-- Load CSS directly to prevent layout shifts -->
+  <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/install-button.css' | relative_url }}">
   {% seo %}
   <link rel="canonical" href="{{ page.url | absolute_url }}">
   <!-- Twitter Card Meta Tags -->
