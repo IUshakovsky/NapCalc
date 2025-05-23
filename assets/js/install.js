@@ -3,7 +3,7 @@ const installButton = document.getElementById('installApp');
 const installContainer = document.getElementById('installContainer');
 
 // Development mode - set to true to force show the install button
-const devMode = true;
+const devMode = false;
 
 // Hide the install button initially (unless in dev mode)
 if (installButton) {

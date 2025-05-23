@@ -18,7 +18,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/favicon/favicon-16x16.png' | relative_url }}">
   <!-- Manifest is loaded later for PWA support -->
   <link rel="mask-icon" href="{{ '/assets/favicon/safari-pinned-tab.svg' | relative_url }}" color="#8b5cf6">
-  <link rel="shortcut icon" href="{{ '/favicon.ico' | relative_url }}">
+  <link rel="shortcut icon" href="{{ '/assets/favicon/favicon.ico' | relative_url }}">
   <meta name="msapplication-TileColor" content="#8b5cf6">
   <meta name="msapplication-config" content="{{ '/browserconfig.xml' | relative_url }}">
   <meta name="theme-color" content="#8b5cf6">
@@ -177,7 +177,7 @@
   <script defer>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('{{ "/service-worker.js" | relative_url }}').then(registration => {
+        navigator.serviceWorker.register('{{ "/assets/js/service-worker.js" | relative_url }}').then(registration => {
           console.log('ServiceWorker registration successful with scope: ', registration.scope);
         }).catch(err => {
           console.log('ServiceWorker registration failed: ', err);
