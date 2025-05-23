@@ -1,5 +1,5 @@
 // Service worker version
-const CACHE_NAME = 'tinyrests-v1';
+const CACHE_NAME = 'tinyrests-v2';
 
 // Determine the base URL from the service worker's scope
 const getBaseUrl = () => {
@@ -16,8 +16,8 @@ const FILES_TO_CACHE = [
   '/assets/js/install.js',
   '/assets/js/dropdown-selector.js',
   '/manifest.webmanifest',
-  '/assets/icons/icon-192x192.png',
-  '/assets/icons/icon-512x512.png'
+  '/assets/favicon/android-chrome-192x192.png',
+  '/assets/favicon/android-chrome-512x512.png'
 ];
 
 // Install event - cache assets
