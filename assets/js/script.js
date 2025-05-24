@@ -92,38 +92,88 @@ function handleFaqLinkClick(targetId) {
         question.classList.add('active');
         answer.style.display = 'block';
       }
-      // Scroll to the answer with a slight delay to allow expansion
-      setTimeout(() => {
+      // Scroll to the answer with requestAnimationFrame for better performance
+      requestAnimationFrame(() => {
         targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+      });
     }
   }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Check for URL parameters and auto-fill form if present
-  const urlParams = parseUrlParams();
-  if (Object.keys(urlParams).length > 0) {
-    // Auto-fill form fields
-    if (urlParams.age) document.getElementById('age').value = urlParams.age;
-    if (urlParams.wakeTime) document.getElementById('wakeTime').value = urlParams.wakeTime;
-    if (urlParams.bedTime) document.getElementById('bedTime').value = urlParams.bedTime;
-    if (urlParams.napCount) document.getElementById('napCount').value = urlParams.napCount;
-    if (urlParams.napLength) document.getElementById('napLength').value = urlParams.napLength;
-    
-    // Auto-calculate if we have the minimum required fields
-    if (urlParams.age && urlParams.wakeTime && urlParams.bedTime) {
-      // Give browser a bit more time to fully load and set form values
-      setTimeout(() => {
-        const form = document.getElementById('napForm');
-        if (form) {
-          console.log('Auto-calculating from URL parameters');
-          form.dispatchEvent(new Event('submit'));
+// Template for print functionality - defined outside handlers for better performance
+const createPrintTemplate = (schedule, age, wakeMinutes, bedMinutes, warning) => {
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Nap Schedule for Print</title>
+      <style>
+        body { 
+          font-family: 'Arial', sans-serif; 
+          padding: 20px; 
+          max-width: 800px; 
+          margin: 0 auto; 
         }
-      }, 800);
-    }
-  }
-  
+        .print-header { 
+          text-align: center; 
+          margin-bottom: 30px; 
+        }
+        .print-header h4 { 
+          font-size: 24px; 
+          margin-bottom: 8px; 
+        }
+        .timeline-list { 
+          list-style: none; 
+          padding-left: 30px; 
+          border-left: 3px solid #e2e8f0; 
+          margin: 20px 0; 
+        }
+        .timeline-list li { 
+          position: relative; 
+          padding: 10px 10px 10px 20px; 
+          margin-bottom: 15px; 
+        }
+        .timeline-list li::before { 
+          content: ''; 
+          position: absolute; 
+          left: -16px; 
+          top: 12px; 
+          width: 14px; 
+          height: 14px; 
+          border-radius: 50%; 
+          background-color: #6366f1; 
+        }
+        .timeline-list li.event.wake-up::before { 
+          background-color: #22c55e; 
+        }
+        .timeline-list li.event.nap::before { 
+          background-color: #6366f1; 
+        }
+        .timeline-list li.event.bedtime::before { 
+          background-color: #334155; 
+        }
+        @media print {
+          body { padding: 0; }
+          @page { margin: 2cm; }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="print-header">
+        <h4>Nap Schedule for ${getAgeRangeText(age)} Toddler</h4>
+        <p>Wake-up time: ${formatTime(wakeMinutes)} | Bedtime: ${formatTime(bedMinutes)}</p>
+      </div>
+      <ul class="timeline-list">
+        ${schedule.join('')}
+      </ul>
+      ${warning ? `<div style="margin-top: 20px; padding: 10px; border-left: 4px solid #FF9800; background-color: #FFF4E5;">${warning}</div>` : ''}
+    </body>
+    </html>
+  `;
+};
+
+// Use requestIdleCallback for non-critical initialization
+const initFaqToggles = () => {
   // Initialize FAQ toggles
   document.querySelectorAll('.faq-question').forEach(q => {
     q.addEventListener('click', () => {
@@ -132,8 +182,10 @@ document.addEventListener('DOMContentLoaded', function() {
       answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
     });
   });
-  
-  // Initialize internal link handlers
+};
+
+// Use requestIdleCallback for link handlers too
+const initLinkHandlers = () => {
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
       const targetId = link.getAttribute('href').substring(1);
@@ -143,6 +195,43 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Check for URL parameters and auto-fill form if present
+  const urlParams = parseUrlParams();
+  if (Object.keys(urlParams).length > 0) {
+    // Auto-fill form fields - use requestIdleCallback for non-critical operations
+    requestIdleCallback(() => {
+      if (urlParams.age) document.getElementById('age').value = urlParams.age;
+      if (urlParams.wakeTime) document.getElementById('wakeTime').value = urlParams.wakeTime;
+      if (urlParams.bedTime) document.getElementById('bedTime').value = urlParams.bedTime;
+      if (urlParams.napCount) document.getElementById('napCount').value = urlParams.napCount;
+      if (urlParams.napLength) document.getElementById('napLength').value = urlParams.napLength;
+      
+      // Auto-calculate if we have the minimum required fields
+      if (urlParams.age && urlParams.wakeTime && urlParams.bedTime) {
+        // Use requestAnimationFrame instead of setTimeout for better visual timing
+        requestAnimationFrame(() => {
+          const form = document.getElementById('napForm');
+          if (form) {
+            console.log('Auto-calculating from URL parameters');
+            form.dispatchEvent(new Event('submit'));
+          }
+        });
+      }
+    });
+  }
+  
+  // Initialize UI components in idle time to avoid blocking the main thread
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(initFaqToggles);
+    requestIdleCallback(initLinkHandlers);
+  } else {
+    // Fallback for browsers that don't support requestIdleCallback
+    setTimeout(initFaqToggles, 50);
+    setTimeout(initLinkHandlers, 100);
+  }
 
   // Initialize form submission handler
   document.getElementById('napForm').addEventListener('submit', function(e) {
@@ -295,100 +384,41 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     document.getElementById('printContent').innerHTML = printableVersion;
     
-    // Add events for print button
+    // Add events for print button - use the template we defined earlier
     document.getElementById('printBtn').addEventListener('click', function() {
       // Add ripple animation
       this.classList.add('active');
       
-      // Create a dedicated print window
-      const printWindow = window.open('', '_blank');
-      
-      // Create a complete, standalone document for printing
-      const printDoc = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Nap Schedule for Print</title>
-          <style>
-            body { 
-              font-family: 'Arial', sans-serif; 
-              padding: 20px; 
-              max-width: 800px; 
-              margin: 0 auto; 
-            }
-            .print-header { 
-              text-align: center; 
-              margin-bottom: 30px; 
-            }
-            .print-header h4 { 
-              font-size: 24px; 
-              margin-bottom: 8px; 
-            }
-            .timeline-list { 
-              list-style: none; 
-              padding-left: 30px; 
-              border-left: 3px solid #e2e8f0; 
-              margin: 20px 0; 
-            }
-            .timeline-list li { 
-              position: relative; 
-              padding: 10px 10px 10px 20px; 
-              margin-bottom: 15px; 
-            }
-            .timeline-list li::before { 
-              content: ''; 
-              position: absolute; 
-              left: -16px; 
-              top: 12px; 
-              width: 14px; 
-              height: 14px; 
-              border-radius: 50%; 
-              background-color: #6366f1; 
-            }
-            .timeline-list li.event.wake-up::before { 
-              background-color: #22c55e; 
-            }
-            .timeline-list li.event.nap::before { 
-              background-color: #6366f1; 
-            }
-            .timeline-list li.event.bedtime::before { 
-              background-color: #334155; 
-            }
-            @media print {
-              body { padding: 0; }
-              @page { margin: 2cm; }
-            }
-          </style>
-        </head>
-        <body>
-          <div class="print-header">
-            <h4>Nap Schedule for ${getAgeRangeText(age)} Toddler</h4>
-            <p>Wake-up time: ${formatTime(wakeMinutes)} | Bedtime: ${formatTime(bedMinutes)}</p>
-          </div>
-          <ul class="timeline-list">
-            ${schedule.join('')}
-          </ul>
-          ${warning ? `<div style="margin-top: 20px; padding: 10px; border-left: 4px solid #FF9800; background-color: #FFF4E5;">${warning}</div>` : ''}
-        </body>
-        </html>
-      `;
-      
-      printWindow.document.open();
-      printWindow.document.write(printDoc);
-      printWindow.document.close();
-      
-      setTimeout(() => {
-        this.classList.remove('active');
-        setTimeout(() => {
-          // Print the window
-          printWindow.print();
+      // Use requestAnimationFrame to ensure UI remains responsive
+      requestAnimationFrame(() => {
+        // Create a dedicated print window
+        const printWindow = window.open('', '_blank');
+        
+        // Use the template we defined earlier
+        const printDoc = createPrintTemplate(schedule, age, wakeMinutes, bedMinutes, warning);
+        
+        // Write to the window
+        if (printWindow) {
+          printWindow.document.open();
+          printWindow.document.write(printDoc);
+          printWindow.document.close();
           
-          // Close window after printing (browser dependent)
-          printWindow.onafterprint = function() {
-            printWindow.close();
-          };
-        }, 300);
-      }, 200);
+          // Use requestAnimationFrame to time the UI feedback appropriately
+          requestAnimationFrame(() => {
+            this.classList.remove('active');
+            
+            // Print after a slight delay to ensure document is fully loaded
+            setTimeout(() => {
+              printWindow.print();
+              
+              // Close window after printing (browser dependent)
+              printWindow.onafterprint = function() {
+                printWindow.close();
+              };
+            }, 200);
+          });
+        }
+      });
     });
     
     // Handle copy link button
@@ -422,7 +452,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
     
-    // Handle share button
+    // Handle share button with optimized performance
     const shareBtn = document.getElementById('shareBtn');
     
     // Use Web Share API if available
@@ -431,76 +461,93 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add ripple animation
         shareBtn.classList.add('active');
         
-        try {
-          // Create a share title and text that summarizes the schedule
-          const shareTitle = `Nap Schedule for ${getAgeRangeText(age)} Toddler`;
-          const wakeTimeStr = formatTime(wakeMinutes);
-          const bedTimeStr = formatTime(bedMinutes);
-          
-          let shareText = `Nap Schedule for ${getAgeRangeText(age)} Toddler\n`;
-          shareText += `Wake-up: ${wakeTimeStr} | Bedtime: ${bedTimeStr}\n\n`;
-          
-          // Add each nap time to the text
-          for (let i = 0; i < naps; i++) {
-            const napStart = wakeMinutes + (i+1) * adjustedWakeWindow + i * napLength;
-            const napEnd = napStart + napLength;
-            shareText += `Nap ${i+1}: ${formatTime(napStart)} – ${formatTime(napEnd)}\n`;
+        // Prepare share data in a non-blocking way
+        requestAnimationFrame(async () => {
+          try {
+            // Create a share title and text that summarizes the schedule
+            const shareTitle = `Nap Schedule for ${getAgeRangeText(age)} Toddler`;
+            const wakeTimeStr = formatTime(wakeMinutes);
+            const bedTimeStr = formatTime(bedMinutes);
+            
+            let shareText = `Nap Schedule for ${getAgeRangeText(age)} Toddler\n`;
+            shareText += `Wake-up: ${wakeTimeStr} | Bedtime: ${bedTimeStr}\n\n`;
+            
+            // Avoid complex calculations in the main thread where possible
+            // Pre-calculate the nap times
+            const napTimes = [];
+            for (let i = 0; i < naps; i++) {
+              const napStart = wakeMinutes + (i+1) * adjustedWakeWindow + i * napLength;
+              const napEnd = napStart + napLength;
+              napTimes.push(`Nap ${i+1}: ${formatTime(napStart)} – ${formatTime(napEnd)}\n`);
+            }
+            shareText += napTimes.join('');
+            
+            await navigator.share({
+              title: shareTitle,
+              text: shareText,
+              url: shareableUrl
+            });
+          } catch (err) {
+            console.error('Share failed:', err);
+          } finally {
+            requestAnimationFrame(() => {
+              shareBtn.classList.remove('active');
+            });
           }
-          
-          await navigator.share({
-            title: shareTitle,
-            text: shareText,
-            url: shareableUrl
-          });
-        } catch (err) {
-          console.error('Share failed:', err);
-        } finally {
-          setTimeout(() => {
-            shareBtn.classList.remove('active');
-          }, 200);
-        }
+        });
       });
     } else {
-      // If Web Share API is not available, create a fallback
+      // If Web Share API is not available, create a fallback with better performance
       shareBtn.addEventListener('click', function() {
         // Add ripple animation
         this.classList.add('active');
-        setTimeout(() => {
-          this.classList.remove('active');
-        }, 200);
         
-        // Create a popup with the shareable URL
-        const shareableUrl = generateShareableUrl({
-          age: age,
-          wakeTime: wakeTime,
-          bedTime: bedTime,
-          napCount: naps,
-          napLength: napLength
+        // Use clipboard API instead of execCommand when possible
+        requestAnimationFrame(() => {
+          const shareableLink = shareableUrl; // Use the already generated URL
+          
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            // Modern clipboard API - much more efficient
+            navigator.clipboard.writeText(shareableLink).then(() => {
+              copyFeedback.classList.add('show');
+              setTimeout(() => {
+                copyFeedback.classList.remove('show');
+              }, 2000);
+            }).catch(err => {
+              console.error('Clipboard write failed:', err);
+              alert('Copy this link to share: ' + shareableLink);
+            });
+          } else {
+            // Fallback for older browsers
+            try {
+              // Create a temporary input field
+              const tempInput = document.createElement('input');
+              tempInput.value = shareableLink;
+              // Position off-screen
+              tempInput.style.position = 'absolute';
+              tempInput.style.left = '-9999px';
+              document.body.appendChild(tempInput);
+              tempInput.select();
+              
+              document.execCommand('copy');
+              copyFeedback.classList.add('show');
+              setTimeout(() => {
+                copyFeedback.classList.remove('show');
+              }, 2000);
+              
+              // Remove the temporary input
+              document.body.removeChild(tempInput);
+            } catch (err) {
+              console.error('Could not copy text:', err);
+              alert('Copy this link to share: ' + shareableLink);
+            }
+          }
+          
+          // Remove active class
+          requestAnimationFrame(() => {
+            this.classList.remove('active');
+          });
         });
-        
-        // Create a fallback sharing UI
-        const shareableLink = shareableUrl;
-        
-        // Create a temporary input field
-        const tempInput = document.createElement('input');
-        tempInput.value = shareableLink;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        
-        try {
-          // Copy the link to clipboard
-          document.execCommand('copy');
-          copyFeedback.classList.add('show');
-          setTimeout(() => {
-            copyFeedback.classList.remove('show');
-          }, 2000);
-        } catch (err) {
-          console.error('Could not copy text: ', err);
-          alert('Copy this link to share: ' + shareableLink);
-        }
-        
-        // Remove the temporary input
-        document.body.removeChild(tempInput);
       });
     }
     output.classList.remove('d-none');

@@ -32,34 +32,7 @@
   <!-- Custom optimized Bootstrap CSS (33KB → 8KB) -->
   <link rel="stylesheet" href="{{ '/assets/css/bootstrap-custom.css' | relative_url }}">
   
-  <!-- loadCSS helper for non-render blocking CSS loading -->
-  <script>
-    /* loadCSS. [c]2017 Filament Group, Inc. MIT License */
-    (function(w){"use strict";if(!w.loadCSS){w.loadCSS=function(){};}
-    var rp=loadCSS.relpreload={};
-    rp.support=(function(){var ret;try{ret=w.document.createElement("link").relList.supports("preload")}catch(e){ret=!1;}
-    return function(){return ret;};})();
-    rp.bindMediaToggle=function(link){
-        var finalMedia=link.media||"all";
-        function enableStylesheet(){link.media=finalMedia;}
-        if(link.addEventListener){link.addEventListener("load",enableStylesheet);}
-        else if(link.attachEvent){link.attachEvent("onload",enableStylesheet);}
-        setTimeout(function(){link.rel="stylesheet";link.media="only x";
-        setTimeout(enableStylesheet,0);});};rp.poly=function(){
-        if(rp.support()){return;}
-        var links=w.document.getElementsByTagName("link");
-        for(var i=0;i<links.length;i++){
-        var link=links[i];
-        if(link.rel==="preload"&&link.getAttribute("as")==="style"&&!link.getAttribute("data-loadcss")){
-        link.setAttribute("data-loadcss",true);
-        rp.bindMediaToggle(link);}}};if(!rp.support()){
-        rp.poly();
-        var run=w.setInterval(rp.poly,500);
-        if(w.addEventListener){w.addEventListener("load",function(){rp.poly();w.clearInterval(run);});}
-        else if(w.attachEvent){w.attachEvent("onload",function(){rp.poly();w.clearInterval(run);});}}
-    if(typeof exports!=="undefined"){exports.loadCSS=loadCSS;}
-    else{w.loadCSS=loadCSS;}}(typeof global!=="undefined"?global:this));
-  </script>
+  <!-- CSS loading is optimized using the onload attribute on stylesheet links -->
   
   <!-- Critical CSS inline for faster page rendering -->
   <style>
@@ -207,8 +180,8 @@
     });
   </script>
   
-  <!-- Dark Mode Script -->
-  <script>
+  <!-- Dark Mode Script - deferred to improve page load time -->
+  <script defer>
     document.addEventListener('DOMContentLoaded', function() {
       const darkModeToggle = document.getElementById('darkModeToggle');
       const htmlElement = document.documentElement;
@@ -220,20 +193,51 @@
       // Set initial state
       if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
         htmlElement.classList.add('dark-mode');
-        darkModeToggle.checked = true;
+        if (darkModeToggle) darkModeToggle.checked = true;
       }
       
       // Toggle theme on switch change
-      darkModeToggle.addEventListener('change', function() {
-        if (this.checked) {
-          htmlElement.classList.add('dark-mode');
-          localStorage.setItem('theme', 'dark');
-        } else {
-          htmlElement.classList.remove('dark-mode');
-          localStorage.setItem('theme', 'light');
-        }
-      });
+      if (darkModeToggle) {
+        darkModeToggle.addEventListener('change', function() {
+          if (this.checked) {
+            htmlElement.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark');
+          } else {
+            htmlElement.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light');
+          }
+        });
+      }
     });
+  </script>
+  
+  <!-- Deferred loadCSS helper moved to end of body -->
+  <script defer>
+    /* loadCSS. [c]2017 Filament Group, Inc. MIT License */
+    (function(w){"use strict";if(!w.loadCSS){w.loadCSS=function(){};}
+    var rp=loadCSS.relpreload={};
+    rp.support=(function(){var ret;try{ret=w.document.createElement("link").relList.supports("preload")}catch(e){ret=!1;}
+    return function(){return ret;};})();
+    rp.bindMediaToggle=function(link){
+        var finalMedia=link.media||"all";
+        function enableStylesheet(){link.media=finalMedia;}
+        if(link.addEventListener){link.addEventListener("load",enableStylesheet);}
+        else if(link.attachEvent){link.attachEvent("onload",enableStylesheet);}
+        setTimeout(function(){link.rel="stylesheet";link.media="only x";
+        setTimeout(enableStylesheet,0);});};rp.poly=function(){
+        if(rp.support()){return;}
+        var links=w.document.getElementsByTagName("link");
+        for(var i=0;i<links.length;i++){
+        var link=links[i];
+        if(link.rel==="preload"&&link.getAttribute("as")==="style"&&!link.getAttribute("data-loadcss")){
+        link.setAttribute("data-loadcss",true);
+        rp.bindMediaToggle(link);}}};if(!rp.support()){
+        rp.poly();
+        var run=w.setInterval(rp.poly,500);
+        if(w.addEventListener){w.addEventListener("load",function(){rp.poly();w.clearInterval(run);});}
+        else if(w.attachEvent){w.attachEvent("onload",function(){rp.poly();w.clearInterval(run);});}}
+    if(typeof exports!=="undefined"){exports.loadCSS=loadCSS;}
+    else{w.loadCSS=loadCSS;}}(typeof global!=="undefined"?global:this));
   </script>
 </body>
 </html>
