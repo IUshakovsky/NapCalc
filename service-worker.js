@@ -7,10 +7,15 @@ const getBaseUrl = () => {
 };
 
 // Files to cache - will be prefixed with baseUrl when caching
-const FILES_TO_CACHE = [
+// Critical resources first for faster LCP
+const CRITICAL_RESOURCES = [
   '/',
   '/index.html',
   '/assets/css/styles.css',
+  '/assets/css/bootstrap-custom.css'
+];
+
+const NON_CRITICAL_RESOURCES = [
   '/assets/css/install-button.css',
   '/assets/js/script.js',
   '/assets/js/install.js',
@@ -20,12 +25,14 @@ const FILES_TO_CACHE = [
   '/assets/favicon/android-chrome-512x512.png'
 ];
 
+const FILES_TO_CACHE = [...CRITICAL_RESOURCES, ...NON_CRITICAL_RESOURCES];
+
 // Install event - cache assets
 self.addEventListener('install', (event) => {
   const baseUrl = getBaseUrl();
   
   // Add the base URL to each file path
-  const filesToCache = FILES_TO_CACHE.map(file => {
+  const criticalToCache = CRITICAL_RESOURCES.map(file => {
     // Don't modify absolute URLs
     if (file.startsWith('http')) {
       return file;
@@ -38,13 +45,30 @@ self.addEventListener('install', (event) => {
     return `${baseUrl}${file}`;
   });
   
+  const nonCriticalToCache = NON_CRITICAL_RESOURCES.map(file => {
+    if (file.startsWith('http')) return file;
+    return `${baseUrl}${file}`;
+  });
+  
+  // First cache critical resources
+  const cacheCritical = caches.open(CACHE_NAME)
+    .then((cache) => {
+      console.log('Caching critical resources with baseUrl:', baseUrl);
+      return cache.addAll(criticalToCache);
+    });
+    
+  // Then cache non-critical resources
+  const cacheNonCritical = caches.open(CACHE_NAME)
+    .then((cache) => {
+      console.log('Caching non-critical resources with baseUrl:', baseUrl);
+      return cache.addAll(nonCriticalToCache);
+    });
+  
+  // Prioritize critical resources, but still load everything
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('Opened cache with baseUrl:', baseUrl);
-        return cache.addAll(filesToCache);
-      })
+    Promise.all([cacheCritical, cacheNonCritical])
   );
+  
   // Activate immediately
   self.skipWaiting();
 });
@@ -80,30 +104,58 @@ self.addEventListener('fetch', (event) => {
     return;
   }
   
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request)
-          .then((response) => {
-            // Don't cache non-GET requests
-            if (!event.request.url.startsWith('http') || event.request.method !== 'GET') {
-              return response;
-            }
-            
-            // Clone the response
-            const responseToCache = response.clone();
-            
-            // Add to cache
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
+  // For critical resources, prioritize cache response
+  const isCriticalResource = CRITICAL_RESOURCES.some(resource => {
+    const resourcePath = resource === '/' ? baseUrl || '/' : `${baseUrl}${resource}`;
+    return url.pathname === resourcePath;
+  });
+  
+  if (isCriticalResource) {
+    event.respondWith(
+      caches.match(event.request)
+        .then((response) => {
+          return response || fetch(event.request)
+            .then((fetchResponse) => {
+              // Clone the response
+              const responseToCache = fetchResponse.clone();
               
+              // Add to cache
+              caches.open(CACHE_NAME)
+                .then((cache) => {
+                  cache.put(event.request, responseToCache);
+                });
+                
+              return fetchResponse;
+            });
+        })
+    );
+  } else {
+    // For non-critical resources, use the standard strategy
+    event.respondWith(
+      caches.match(event.request)
+        .then((response) => {
+          if (response) {
             return response;
-          });
-      })
-  );
+          }
+          return fetch(event.request)
+            .then((response) => {
+              // Don't cache non-GET requests
+              if (!event.request.url.startsWith('http') || event.request.method !== 'GET') {
+                return response;
+              }
+              
+              // Clone the response
+              const responseToCache = response.clone();
+              
+              // Add to cache
+              caches.open(CACHE_NAME)
+                .then((cache) => {
+                  cache.put(event.request, responseToCache);
+                });
+                
+              return response;
+            });
+        })
+    );
+  }
 });
