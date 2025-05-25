@@ -11,15 +11,19 @@
   <link rel="preload" as="style" href="{{ '/assets/css/bootstrap-custom.css' | relative_url }}" fetchpriority="high">
   <link rel="preload" as="style" href="{{ '/assets/css/styles.css' | relative_url }}" fetchpriority="high">
   
-  <!-- Preload critical fonts with high priority -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,()-&font-display=swap" as="style" fetchpriority="high">
+  <!-- Preload minimal subset of font for First Contentful Paint with block display -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap&text=TinyRestsPfcmhud&font-display=block" as="style" fetchpriority="high">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap&text=TinyRestsPfcmhud&font-display=block">
   
-  <!-- Preload SVG icon used in LCP area -->
-  <link rel="preload" as="image" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' width='28' height='28'%3E%3Ccircle cx='50' cy='50' r='45' fill='%238b5cf6' /%3E%3Cpath d='M20,50 a30,30 0 0 1 60,0' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' /%3E%3Cpath d='M30,50 a20,20 0 0 1 40,0' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' /%3E%3Cpath d='M40,50 a10,10 0 0 1 20,0' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' /%3E%3C/svg%3E" fetchpriority="high">
+  <!-- Inline SVG for instant first render -->
+  <style>
+    .logo-svg{width:28px;height:28px;display:inline-block}
+  </style>
   
-  <!-- Load fonts with font-display: swap -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,()-&font-display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0&display=swap&font-display=swap">
+  <!-- Preload remaining fonts with lower priority -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,()-&font-display=swap" as="style">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,()-&font-display=swap" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0&display=swap&font-display=swap" media="print" onload="this.media='all'">
   
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -40,20 +44,27 @@
   
   <!-- CSS loading is optimized using the onload attribute on stylesheet links -->
   
-  <!-- Critical CSS inline for faster page rendering -->
+  <!-- Absolute critical CSS for First Contentful Paint only -->
   <style>
-    /* Expanded critical CSS to prioritize LCP elements */
-    body{font-family:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:#1e293b;background-color:#f8fafc;line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
-    .container{width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto;max-width:1140px}
-    .site-header{background-color:white;padding:1.5rem 0;box-shadow:0 2px 10px rgba(0,0,0,0.05)}
-    .header-content{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:center}
-    /* Optimized logo styling for fast render */
+    /* Ultra-minimal FCP styles - only what's needed for immediate render */
+    body{margin:0;font-family:"Nunito",system-ui,-apple-system,sans-serif;color:#1e293b;background-color:#f8fafc}
+    .container{width:100%;padding-right:15px;padding-left:15px;margin:0 auto;max-width:1140px}
+    .site-header{background-color:white;padding:1rem 0;box-shadow:0 2px 10px rgba(0,0,0,0.05)}
+    .header-content{display:flex;align-items:center;justify-content:center}
     .logo{display:flex;align-items:center}
-    .logo-link{display:flex;align-items:center;text-decoration:none;color:#1e293b;transition:all 0.3s cubic-bezier(0.4,0,0.2,1)}
-    .logo-text{font-size:1.8rem;font-weight:800}
-    .logo-icon{font-size:1.75rem;vertical-align:middle;display:inline-flex;align-items:center;margin-right:4px}
-    .custom-zzz svg{transition:all 0.3s cubic-bezier(0.4,0,0.2,1)}
-    .custom-zzz svg circle{fill:#8b5cf6}
+    .logo-link{display:flex;align-items:center;text-decoration:none;color:#1e293b}
+    .logo-text{font-size:1.8rem;font-weight:800;margin:0}
+    .logo-icon{margin-right:4px}
+    .logo-svg circle{fill:#8b5cf6}
+    .logo-svg path{fill:none;stroke:white;stroke-width:5;stroke-linecap:round}
+  </style>
+  
+  <!-- Additional critical CSS loaded asynchronously -->
+  <style media="print" onload="this.media='all';this.onload=null;">
+    /* Additional critical styles loaded after FCP */
+    body{line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+    .header-content{flex-wrap:wrap;gap:1rem;justify-content:space-between}
+    .logo-link{transition:all 0.3s cubic-bezier(0.4,0,0.2,1)}
     .tagline{font-weight:500;color:#64748b;font-size:1.1rem}
     .main-content{flex:1;padding-bottom:3rem;margin-top:1rem}
     /* Critical calculator card styling for LCP */
@@ -104,12 +115,12 @@
       <div class="header-content">
         <div class="logo">
           <a href="{{ '/' | relative_url }}" class="logo-link">
-            <span class="logo-icon custom-zzz">
-              <svg viewBox="0 0 100 100" width="28" height="28">
-                <circle cx="50" cy="50" r="45" fill="var(--primary)" />
-                <path d="M20,50 a30,30 0 0 1 60,0" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" />
-                <path d="M30,50 a20,20 0 0 1 40,0" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" />
-                <path d="M40,50 a10,10 0 0 1 20,0" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" />
+            <span class="logo-icon">
+              <svg class="logo-svg" viewBox="0 0 100 100" width="28" height="28">
+                <circle cx="50" cy="50" r="45" />
+                <path d="M20,50 a30,30 0 0 1 60,0" />
+                <path d="M30,50 a20,20 0 0 1 40,0" />
+                <path d="M40,50 a10,10 0 0 1 20,0" />
               </svg>
             </span>
             <span class="logo-text">TinyRests</span>
