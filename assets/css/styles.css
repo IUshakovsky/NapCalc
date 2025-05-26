@@ -301,6 +301,7 @@ html.dark-mode .custom-zzz svg circle {
   }
 }
 
+/* LCP element - optimized for performance */
 .title {
   font-size: 1.8rem;
   font-weight: 700;
@@ -308,6 +309,16 @@ html.dark-mode .custom-zzz svg circle {
   color: var(--dark-text);
   text-align: center;
   position: relative;
+  /* Explicit dimensions to prevent layout shifts */
+  min-height: 2.2rem;
+  margin-block: 1rem 1.5rem;
+  /* Content-visibility for better paint performance */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 2.2rem;
+  /* Remove any transitions */
+  transition: none;
+  /* High paint priority */
+  will-change: auto;
 }
 
 .title:after {
@@ -318,6 +329,8 @@ html.dark-mode .custom-zzz svg circle {
   background: var(--primary);
   margin: 0.5rem auto 0;
   border-radius: 5px;
+  /* Separate animation from critical render path */
+  animation-delay: 0.3s;
 }
 
 /* Form styling */

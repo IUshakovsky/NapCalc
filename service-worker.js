@@ -7,12 +7,13 @@ const getBaseUrl = () => {
 };
 
 // Files to cache - will be prefixed with baseUrl when caching
-// Critical resources first for faster LCP
+// Critical resources first for faster LCP (prioritizing h1.title element)
 const CRITICAL_RESOURCES = [
   '/',
   '/index.html',
   '/assets/css/styles.css',
-  '/assets/css/bootstrap-custom.css'
+  '/assets/css/bootstrap-custom.css',
+  'https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,()-&font-display=swap'
 ];
 
 const NON_CRITICAL_RESOURCES = [
