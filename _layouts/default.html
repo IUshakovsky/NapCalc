@@ -89,6 +89,98 @@
   <link rel="stylesheet" href="{{ '/assets/css/install-button.css' | relative_url }}">
   {% seo %}
   <link rel="canonical" href="{{ page.url | absolute_url }}">
+  
+  {% if page.url == "/" %}
+  <!-- FAQ Schema for Rich Snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How is the nap schedule calculated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We calculate age-appropriate wake windows and suggest nap durations to help spread naps evenly between wake-up and bedtime. Our calculator respects your privacy and does not store any data."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a wake window?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A wake window is the period a child can be awake before needing to sleep again. It helps avoid overtiredness and supports better sleep. The calculator automatically suggests appropriate wake windows based on your child's age."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do all babies follow the same schedule?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, every baby is different. Our calculator gives general guidance, but it's okay to adjust based on your child's behavior and needs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use this calculator daily?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! You can use it every day, especially when your toddler's sleep patterns are changing or if you want to try a new schedule. TinyRests is accessible anytime."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if my baby wakes up earlier than planned?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It's common. You can adjust the schedule by shortening the wake window slightly, or shift the entire schedule accordingly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I transition my child from two naps to one?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Gradually shift to a later morning nap, extending the first wake window. When your child can comfortably stay awake for about 5 hours, they may be ready for one nap. The transition usually happens between 15-18 months."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is my toddler fighting naps?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "This could be due to several factors: inappropriate timing (too early or late), developmental milestones, separation anxiety, or readiness to drop a nap. Try adjusting wake windows using our calculator."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long should my baby's naps be?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ideally, naps should be at least 45 minutes to complete one sleep cycle. For babies 4+ months, aim for 1-2 hour naps. Younger babies may have shorter, more frequent naps."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I wake my baby from a nap?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Generally, it's best to let babies wake naturally. However, if long naps interfere with bedtime or other naps, it might be reasonable to wake them. Our calculator helps balance nap duration with overall sleep needs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the calculator account for night sleep?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The calculator focuses on daytime nap scheduling, using wake-up time and bedtime as anchors. Most children need 10-12 hours of night sleep, which this schedule helps support by preventing overtiredness during the day."
+        }
+      }
+    ]
+  }
+  </script>
+  {% endif %}
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{% if page.title %}{{ page.title }} | TinyRests{% else %}TinyRests - Toddler Nap Schedule Calculator{% endif %}">
