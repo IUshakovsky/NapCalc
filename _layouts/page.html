@@ -1,0 +1,15 @@
+---
+layout: default
+---
+
+<!-- Header Area for Page -->
+<section class="calculator-card page-header-card">
+  <h1 class="title">{{ page.title }}</h1>
+  {% if page.subtitle %}
+  <p class="lead subtitle text-center">{{ page.subtitle }}</p>
+  {% endif %}
+</section>
+
+<section class="content-page">
+  {{ content }}
+</section>

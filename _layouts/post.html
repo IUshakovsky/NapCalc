@@ -1,0 +1,57 @@
+---
+layout: default
+---
+
+<article class="blog-post">
+  <section class="calculator-card post-header-card">
+    <h1 class="title">{{ page.title }}</h1>
+    <p class="post-meta text-center">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+      {% if page.author %} • By {{ page.author }}{% endif %}
+    </p>
+    {% if page.tags %}
+    <div class="post-tags text-center">
+      {% for tag in page.tags %}
+      <span class="badge">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </section>
+
+  <section class="calculator-card post-content-card">
+    {% if page.image %}
+    <img src="{{ page.image | relative_url }}" class="post-featured-image" alt="{{ page.title }}">
+    {% endif %}
+    <div class="blog-content">
+      {{ content }}
+    </div>
+  </section>
+
+  <!-- Previous/Next Post Navigation -->
+  <div class="post-navigation">
+    <div class="nav-prev">
+      {% if page.previous.url %}
+      <a href="{{ page.previous.url | relative_url }}" class="btn btn-outline">
+        <span class="material-symbols-rounded">arrow_back</span>
+        <span class="nav-text">{{ page.previous.title | truncate: 30 }}</span>
+      </a>
+      {% endif %}
+    </div>
+    <div class="nav-next">
+      {% if page.next.url %}
+      <a href="{{ page.next.url | relative_url }}" class="btn btn-outline">
+        <span class="nav-text">{{ page.next.title | truncate: 30 }}</span>
+        <span class="material-symbols-rounded">arrow_forward</span>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Back to Blog -->
+  <div class="text-center back-to-blog">
+    <a href="{{ '/blog' | relative_url }}" class="btn btn-primary">
+      <span class="material-symbols-rounded">list</span>
+      All Blog Posts
+    </a>
+  </div>
+</article>

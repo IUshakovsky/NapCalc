@@ -1,5 +1,5 @@
 // Service worker version
-const CACHE_NAME = 'tinyrests-v2';
+const CACHE_NAME = 'tinyrests-v3';
 
 // Determine the base URL from the service worker's scope
 const getBaseUrl = () => {

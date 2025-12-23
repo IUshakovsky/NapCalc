@@ -223,13 +223,25 @@
           </a>
         </div>
         <div class="tagline">Perfect rest times for tiny humans</div>
-        <div class="theme-toggle">
-          <span class="mode-icon light-icon">☀️</span>
-          <label class="switch">
-            <input type="checkbox" id="darkModeToggle">
-            <span class="slider round"></span>
-          </label>
-          <span class="mode-icon dark-icon">🌙</span>
+        <div class="header-actions">
+          <nav class="site-nav">
+            <a href="{{ '/' | relative_url }}" class="nav-link {% if page.url == '/' %}active{% endif %}">
+              <span class="material-symbols-rounded">calculate</span>
+              Calculator
+            </a>
+            <a href="{{ '/blog/' | relative_url }}" class="nav-link {% if page.url contains '/blog' %}active{% endif %}">
+              <span class="material-symbols-rounded">article</span>
+              Blog
+            </a>
+          </nav>
+          <div class="theme-toggle">
+            <span class="mode-icon light-icon">☀️</span>
+            <label class="switch">
+              <input type="checkbox" id="darkModeToggle">
+              <span class="slider round"></span>
+            </label>
+            <span class="mode-icon dark-icon">🌙</span>
+          </div>
         </div>
       </div>
     </div>

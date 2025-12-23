@@ -1,0 +1,309 @@
+---
+layout: page
+title: "TinyRests Blog"
+subtitle: "Tips, guides, and insights about toddler sleep"
+permalink: /blog/
+pagination:
+  enabled: true
+  collection: 'posts'
+  permalink: '/page/:num/'
+  sort_reverse: true
+---
+
+<div class="blog-list">
+  {% if paginator.posts.size > 0 %}
+    <!-- Blog Posts List -->
+    {% for post in paginator.posts %}
+    <div class="blog-post-card calculator-card">
+      {% if post.image %}
+      <img src="{{ post.image | relative_url }}" class="post-card-image" alt="{{ post.title }}">
+      {% endif %}
+      <div class="post-card-body">
+        <h2 class="post-card-title">
+          <a href="{{ post.url | relative_url }}">
+            {{ post.title }}
+          </a>
+        </h2>
+        
+        <div class="post-card-meta">
+          <span class="material-symbols-rounded">calendar_today</span>
+          <time datetime="{{ post.date | date_to_xmlschema }}">
+            {{ post.date | date: "%B %d, %Y" }}
+          </time>
+          {% if post.author %}
+          <span class="author-separator">•</span>
+          <span class="material-symbols-rounded">person</span>
+          {{ post.author }}
+          {% endif %}
+        </div>
+
+        {% if post.excerpt %}
+        <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncatewords: 50 }}</p>
+        {% endif %}
+
+        {% if post.tags %}
+        <div class="post-card-tags">
+          {% for tag in post.tags %}
+          <span class="badge">{{ tag }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <a href="{{ post.url | relative_url }}" class="btn btn-outline read-more-btn">
+          Read More
+          <span class="material-symbols-rounded">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <!-- No Posts Message -->
+    <div class="calculator-card no-posts-card">
+      <div class="no-posts-content">
+        <span class="material-symbols-rounded no-posts-icon">bedtime</span>
+        <h3>No blog posts yet</h3>
+        <p>Check back soon for sleep tips and toddler nap guides!</p>
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- Pagination Navigation -->
+  {% if paginator.total_pages > 1 %}
+  <nav aria-label="Blog pagination" class="blog-pagination">
+    <ul class="pagination">
+      <!-- Previous Page -->
+      {% if paginator.previous_page %}
+        <li class="page-item">
+          <a class="page-link" href="{{ paginator.previous_page_path | relative_url }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <span class="page-link" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </span>
+        </li>
+      {% endif %}
+
+      <!-- Page Numbers -->
+      {% for page in (1..paginator.total_pages) %}
+        {% if page == paginator.page %}
+          <li class="page-item active" aria-current="page">
+            <span class="page-link">{{ page }}</span>
+          </li>
+        {% elsif page == 1 %}
+          <li class="page-item">
+            <a class="page-link" href="{{ '/blog/' | relative_url }}">{{ page }}</a>
+          </li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link" href="/blog/page/{{ page }}/">{{ page }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      <!-- Next Page -->
+      {% if paginator.next_page %}
+        <li class="page-item">
+          <a class="page-link" href="{{ paginator.next_page_path | relative_url }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <span class="page-link" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </span>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+</div>
+
+<style>
+/* Blog List Styles */
+.blog-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.blog-post-card {
+  margin-bottom: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.blog-post-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -5px rgba(139, 92, 246, 0.15);
+}
+
+.post-card-image {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+  margin: -2rem -2rem 1.5rem -2rem;
+  width: calc(100% + 4rem);
+}
+
+.post-card-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.post-card-title a {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.post-card-title a:hover {
+  color: var(--primary);
+}
+
+.post-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.post-card-meta .material-symbols-rounded {
+  font-size: 1rem;
+}
+
+.author-separator {
+  margin: 0 0.25rem;
+}
+
+.post-card-excerpt {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.post-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.post-card-tags .badge {
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.read-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.read-more-btn .material-symbols-rounded {
+  font-size: 1rem;
+  transition: transform 0.2s;
+}
+
+.read-more-btn:hover .material-symbols-rounded {
+  transform: translateX(3px);
+}
+
+/* No Posts Message */
+.no-posts-card {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.no-posts-icon {
+  font-size: 4rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.no-posts-content h3 {
+  margin-bottom: 0.5rem;
+}
+
+.no-posts-content p {
+  color: var(--text-secondary);
+}
+
+/* Pagination Styles */
+.blog-pagination {
+  margin-top: 2rem;
+  margin-bottom: 0;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0.25rem;
+}
+
+.page-item .page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.35rem 0.65rem;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  background-color: white;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.page-item .page-link:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3);
+}
+
+.page-item.active .page-link {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  box-shadow: 0 2px 5px rgba(139, 92, 246, 0.3);
+}
+
+.page-item.disabled .page-link {
+  color: var(--text-muted);
+  border-color: var(--border-color);
+  background-color: var(--bg-secondary);
+  cursor: not-allowed;
+}
+
+.page-item.disabled .page-link:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Dark mode adjustments */
+html.dark-mode .post-card-tags .badge {
+  background: rgba(139, 92, 246, 0.2);
+}
+
+html.dark-mode .page-item .page-link {
+  background-color: var(--card-bg);
+}
+
+html.dark-mode .page-item.disabled .page-link {
+  background-color: var(--bg-secondary);
+}
+</style>
