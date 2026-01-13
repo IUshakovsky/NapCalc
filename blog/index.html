@@ -32,7 +32,6 @@ pagination:
             {{ post.date | date: "%B %d, %Y" }}
           </time>
           {% if post.author %}
-          <span class="author-separator">•</span>
           <span class="material-symbols-rounded">person</span>
           {{ post.author }}
           {% endif %}
@@ -126,8 +125,45 @@ pagination:
 <style>
 /* Blog List Styles */
 .blog-list {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
+  width: 100%;
+}
+
+/* Override calculator-card constraints for blog page */
+.blog-list .calculator-card {
+  max-width: 100%;
+  width: 100%;
+}
+
+/* Page header card - make it wider */
+.page-header-card {
+  max-width: 1000px;
+}
+
+@media (max-width: 767px) {
+  /* Reduce stacked paddings on mobile (container + content-page) */
+  .content-page {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .page-header-card {
+    max-width: 100%;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+  }
+
+  .blog-list .calculator-card {
+    max-width: 100%;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+    padding: 1.25rem;
+  }
 }
 
 .blog-post-card {
@@ -147,6 +183,15 @@ pagination:
   width: calc(100% + 4rem);
   height: 250px;
   background: var(--light-bg);
+}
+
+/* Mobile: align image width with content */
+@media (max-width: 767px) {
+  .post-card-cover {
+    margin: -1.25rem -1.25rem 1.25rem -1.25rem;
+    width: calc(100% + 2.5rem);
+    height: 200px;
+  }
 }
 
 .post-card-image {
@@ -184,10 +229,6 @@ pagination:
   font-size: 1rem;
 }
 
-.author-separator {
-  margin: 0 0.25rem;
-}
-
 .post-card-excerpt {
   color: var(--text-secondary);
   line-height: 1.6;
@@ -202,8 +243,8 @@ pagination:
 }
 
 .post-card-tags .badge {
-  background: var(--primary-light);
-  color: var(--primary);
+  background: #f3f0ff;
+  color: #6d28d9;
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
   font-size: 0.8rem;
@@ -304,7 +345,8 @@ pagination:
 
 /* Dark mode adjustments */
 html.dark-mode .post-card-tags .badge {
-  background: rgba(139, 92, 246, 0.2);
+  background: rgba(167, 139, 250, 0.15);
+  color: #c4b5fd;
 }
 
 html.dark-mode .page-item .page-link {
