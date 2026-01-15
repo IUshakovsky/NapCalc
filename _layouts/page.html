@@ -3,13 +3,13 @@ layout: default
 ---
 
 <!-- Header Area for Page -->
-<section class="calculator-card page-header-card">
+<section class="calculator-card page-header-card{% if page.url contains '/blog' %} blog-page-header{% endif %}">
   <h1 class="title">{{ page.title }}</h1>
   {% if page.subtitle %}
   <p class="lead subtitle text-center">{{ page.subtitle }}</p>
   {% endif %}
 </section>
 
-<section class="content-page">
+<section class="content-page{% if page.url contains '/blog' %} blog-page{% endif %}">
   {{ content }}
 </section>

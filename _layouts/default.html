@@ -248,7 +248,7 @@
   </header>
 
   <!-- Main Content -->
-  <main class="container main-content">
+  <main class="container main-content{% if page.url contains '/blog' %} blog-main-content{% endif %}">
     {{ content }}
   </main>
 

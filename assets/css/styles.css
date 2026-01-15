@@ -1418,6 +1418,16 @@ select.form-select,
   margin-bottom: 2rem;
 }
 
+@media (min-width: 769px) {
+  .blog-page-header {
+    margin-bottom: 1.25rem;
+  }
+
+  .blog-page {
+    padding-top: 0;
+  }
+}
+
 .page-header-card .subtitle {
   color: var(--medium-text);
   margin-top: -0.5rem;
@@ -1436,6 +1446,14 @@ select.form-select,
 
   .blog-post .calculator-card {
     max-width: 980px;
+  }
+
+  .blog-page-header {
+    max-width: 1100px;
+  }
+
+  .blog-page .calculator-card {
+    max-width: 1100px;
   }
 }
 
