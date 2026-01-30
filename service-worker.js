@@ -1,5 +1,5 @@
 // Service worker version
-const CACHE_NAME = 'tinyrests-v3';
+const CACHE_NAME = 'tinyrests-v4';
 
 // Determine the base URL from the service worker's scope
 const getBaseUrl = () => {
@@ -88,7 +88,25 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event - serve from cache, fall back to network
+// Check if request is for HTML content
+const isHtmlRequest = (request) => {
+  const url = new URL(request.url);
+  const acceptHeader = request.headers.get('Accept') || '';
+  // HTML requests: accept header includes text/html, or path ends with / or .html, or has no extension
+  const pathEndsWithSlash = url.pathname.endsWith('/');
+  const pathEndsWithHtml = url.pathname.endsWith('.html');
+  const hasNoExtension = !url.pathname.split('/').pop().includes('.');
+  return acceptHeader.includes('text/html') || pathEndsWithSlash || pathEndsWithHtml || hasNoExtension;
+};
+
+// Check if request is for static assets (CSS, JS, images, fonts)
+const isStaticAsset = (request) => {
+  const url = new URL(request.url);
+  const pathname = url.pathname;
+  return /\.(css|js|png|jpg|jpeg|gif|svg|ico|webp|woff|woff2|ttf|eot|webmanifest)$/i.test(pathname);
+};
+
+// Fetch event - network-first for HTML, cache-first for static assets
 self.addEventListener('fetch', (event) => {
   const baseUrl = getBaseUrl();
   
@@ -105,33 +123,29 @@ self.addEventListener('fetch', (event) => {
     return;
   }
   
-  // For critical resources, prioritize cache response
-  const isCriticalResource = CRITICAL_RESOURCES.some(resource => {
-    const resourcePath = resource === '/' ? baseUrl || '/' : `${baseUrl}${resource}`;
-    return url.pathname === resourcePath;
-  });
-  
-  if (isCriticalResource) {
+  // Network-first strategy for HTML (always get fresh content)
+  if (isHtmlRequest(event.request)) {
     event.respondWith(
-      caches.match(event.request)
+      fetch(event.request)
         .then((response) => {
-          return response || fetch(event.request)
-            .then((fetchResponse) => {
-              // Clone the response
-              const responseToCache = fetchResponse.clone();
-              
-              // Add to cache
-              caches.open(CACHE_NAME)
-                .then((cache) => {
-                  cache.put(event.request, responseToCache);
-                });
-                
-              return fetchResponse;
+          // Clone and cache the fresh response
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME)
+            .then((cache) => {
+              cache.put(event.request, responseToCache);
             });
+          return response;
+        })
+        .catch(() => {
+          // Fallback to cache if network fails (offline support)
+          return caches.match(event.request);
         })
     );
-  } else {
-    // For non-critical resources, use the standard strategy
+    return;
+  }
+  
+  // Cache-first strategy for static assets (CSS, JS, images, fonts)
+  if (isStaticAsset(event.request)) {
     event.respondWith(
       caches.match(event.request)
         .then((response) => {
@@ -139,24 +153,32 @@ self.addEventListener('fetch', (event) => {
             return response;
           }
           return fetch(event.request)
-            .then((response) => {
-              // Don't cache non-GET requests
-              if (!event.request.url.startsWith('http') || event.request.method !== 'GET') {
-                return response;
-              }
-              
-              // Clone the response
-              const responseToCache = response.clone();
-              
-              // Add to cache
+            .then((fetchResponse) => {
+              const responseToCache = fetchResponse.clone();
               caches.open(CACHE_NAME)
                 .then((cache) => {
                   cache.put(event.request, responseToCache);
                 });
-                
-              return response;
+              return fetchResponse;
             });
         })
     );
+    return;
   }
+  
+  // Default: network-first for everything else
+  event.respondWith(
+    fetch(event.request)
+      .then((response) => {
+        const responseToCache = response.clone();
+        caches.open(CACHE_NAME)
+          .then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        return response;
+      })
+      .catch(() => {
+        return caches.match(event.request);
+      })
+  );
 });
