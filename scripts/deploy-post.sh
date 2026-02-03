@@ -131,7 +131,7 @@ echo -e "${GREEN}✓ Copied image to: $IMG_DEST${NC}\n"
 if [ "$BUILD_FLAG" = true ]; then
     echo "Step 7: Building and serving with Jekyll..."
     cd "$PROJECT_DIR"
-    bundle exec jekyll serve
+    bundle exec jekyll serve --port 4001
 else
     echo -e "${YELLOW}Skipping Jekyll build (use -b flag to build and serve)${NC}\n"
 fi

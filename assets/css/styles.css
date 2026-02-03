@@ -1433,29 +1433,32 @@ select.form-select,
   margin-top: -0.5rem;
 }
 
-/* Blog post layout */
-.blog-post {
-  max-width: 800px;
+ /* Blog post layout */
+ .blog-post {
+  max-width: 1000px;
   margin: 0 auto;
-}
+ }
+ 
+ .blog-post .calculator-card {
+  max-width: 1000px;
+ }
 
-@media (min-width: 1024px) {
-  .blog-post {
-    max-width: 980px;
-  }
+ /* Blog listing page - consistent widths for header and content */
+ .blog-page-header.calculator-card {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+ }
 
-  .blog-post .calculator-card {
-    max-width: 980px;
-  }
+ .blog-page .calculator-card {
+  max-width: 1000px;
+ }
 
-  .blog-page-header {
-    max-width: 1100px;
-  }
-
-  .blog-page .calculator-card {
-    max-width: 1100px;
-  }
-}
+ .content-page.blog-page {
+  max-width: 1000px !important;
+  padding-left: 0;
+  padding-right: 0;
+ }
 
 .post-header-card {
   text-align: center;
@@ -1494,17 +1497,19 @@ html.dark-mode .post-card-tags .badge {
 }
 
 .post-featured-image {
-  width: calc(100% + 5rem);
-  margin: -2.5rem -2.5rem 2rem -2.5rem;
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 0 2rem 0;
   max-height: 400px;
   object-fit: cover;
-  border-radius: 16px 16px 0 0;
+  border-radius: 12px;
 }
 
 @media (max-width: 768px) {
   .post-featured-image {
-    width: calc(100% + 3rem);
-    margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+    width: 100%;
+    margin: 0 0 1.5rem 0;
   }
 }
 
