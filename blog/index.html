@@ -143,17 +143,36 @@ pagination:
 
 @media (max-width: 767px) {
   /* Reduce stacked paddings on mobile (container + content-page) */
+  .blog-main-content {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
   .content-page {
     padding-left: 0;
     padding-right: 0;
   }
 
-  .page-header-card {
+  .calculator-card.page-header-card {
     max-width: 100%;
     width: 100%;
     margin-left: 0;
     margin-right: 0;
     box-sizing: border-box;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-header-card .title {
+    margin-bottom: 0.75rem;
+  }
+
+  .page-header-card .subtitle {
+    margin-bottom: 0;
+  }
+
+  .content-page.blog-page {
+    padding-top: 0;
   }
 
   .blog-list .calculator-card {
@@ -232,22 +251,23 @@ pagination:
 .post-card-excerpt {
   color: var(--text-secondary);
   line-height: 1.6;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .post-card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+  justify-content: center;
 }
 
 .post-card-tags .badge {
   background: #f3f0ff;
   color: #6d28d9;
-  padding: 0.25rem 0.75rem;
+  padding: 0.15rem 0.6rem;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 500;
 }
 
