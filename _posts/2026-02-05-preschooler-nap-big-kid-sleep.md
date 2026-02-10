@@ -4,11 +4,9 @@ title: "Mastering the Preschooler Nap: Transitioning to Big Kid Sleep"
 date: 2026-02-05 03:00:00 +0000
 author: "TinyRests Team"
 tags: [preschooler nap, big kid sleep, nap transition, wake windows, toddler sleep]
-except: "Learn when and how preschoolers transition away from naps, how much sleep 3–5 year-olds need, and practical steps to protect big kid sleep without melatonin or bedtime battles."
+excerpt: "Learn when and how preschoolers transition away from naps, how much sleep 3–5 year-olds need, and practical steps to protect big kid sleep without melatonin or bedtime battles."
 image: "/assets/images/blog/preschooler-nap-transition.jpg"
 ---
-
-# Mastering the Preschooler Nap: Transitioning to Big Kid Sleep
 
 Your preschooler refuses naptime, yet melts down at dinner. Or they nap perfectly but won't sleep until 10 p.m. Welcome to the preschool nap transition—one of the trickiest sleep phases for parents to navigate.
 
