@@ -1639,6 +1639,13 @@ html.dark-mode .blog-content tr:nth-child(even) {
   flex: 1;
 }
 
+.nav-share {
+  flex: 0 0 auto;
+  min-width: 150px;
+  text-align: center;
+  position: relative;
+}
+
 .nav-next {
   text-align: right;
 }
@@ -1662,6 +1669,64 @@ html.dark-mode .blog-content tr:nth-child(even) {
   color: white;
 }
 
+.post-navigation .share-trigger {
+  justify-content: center;
+  width: 100%;
+}
+
+.share-fallback {
+  position: relative;
+}
+
+.share-fallback summary {
+  list-style: none;
+}
+
+.share-fallback summary::-webkit-details-marker {
+  display: none;
+}
+
+.share-menu-list {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+  padding: 0.4rem;
+  margin: 0;
+  list-style: none;
+  z-index: 20;
+}
+
+.share-menu-list li {
+  margin: 0;
+}
+
+.share-menu-list a,
+.share-copy-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  color: var(--dark-text);
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.share-menu-list a:hover,
+.share-copy-btn:hover {
+  background: rgba(139, 92, 246, 0.12);
+  color: var(--primary);
+}
+
 .post-navigation .nav-text {
   max-width: 150px;
   overflow: hidden;
@@ -1669,13 +1734,61 @@ html.dark-mode .blog-content tr:nth-child(even) {
   white-space: nowrap;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .post-navigation {
     flex-direction: column;
   }
+
+  .nav-prev,
+  .nav-share,
+  .nav-next {
+    width: 100%;
+  }
+
+  .post-navigation .btn-outline,
+  .post-navigation .share-fallback,
+  .post-navigation .share-trigger {
+    width: 100%;
+  }
+
+  .post-navigation .btn-outline .nav-text {
+    flex: 1;
+    max-width: none;
+  }
+
+  .nav-prev .btn-outline {
+    justify-content: flex-start;
+  }
+
+  .nav-prev .btn-outline .nav-text {
+    text-align: left;
+  }
+
+  .nav-share .share-trigger {
+    justify-content: center;
+  }
+
+  .nav-next .btn-outline {
+    justify-content: flex-end;
+  }
+
+  .nav-next .btn-outline .nav-text {
+    text-align: right;
+  }
+
+  .nav-share {
+    min-width: 0;
+  }
+
+  .share-menu-list {
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+  }
   
   .nav-next {
-    text-align: left;
+    text-align: right;
   }
   
   .post-navigation .nav-text {
@@ -1685,13 +1798,17 @@ html.dark-mode .blog-content tr:nth-child(even) {
 
 /* Back to blog button */
 .back-to-blog {
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .back-to-blog .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.post-main-content {
+  padding-bottom: 1rem;
 }
 
 .back-to-blog .material-symbols-rounded {

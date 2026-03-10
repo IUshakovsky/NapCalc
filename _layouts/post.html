@@ -27,7 +27,7 @@ layout: default
     </div>
   </section>
 
-  <!-- Previous/Next Post Navigation -->
+  <!-- Previous/Next Post Navigation + Share -->
   <div class="post-navigation">
     <div class="nav-prev">
       {% if page.previous.url %}
@@ -36,6 +36,47 @@ layout: default
         <span class="nav-text">{{ page.previous.title | truncate: 30 }}</span>
       </a>
       {% endif %}
+    </div>
+    <div class="nav-share"
+         data-share-title="{{ page.title | escape }}"
+         data-share-text="{{ page.description | default: page.excerpt | strip_html | truncate: 150 | escape }}"
+         data-share-url="{{ page.url | absolute_url }}">
+      <button id="share-native" class="btn btn-outline share-trigger d-none" type="button">
+        <span class="material-symbols-rounded">share</span>
+        <span>Share</span>
+      </button>
+
+      <details id="share-fallback" class="share-fallback d-none">
+        <summary class="btn btn-outline share-trigger" role="button">
+          <span class="material-symbols-rounded">share</span>
+          <span>Share</span>
+        </summary>
+        <ul class="share-menu-list">
+          <li>
+            <a href="https://twitter.com/intent/tweet?url={{ page.url | absolute_url | url_encode }}&text={{ page.title | url_encode }}" target="_blank" rel="noopener">
+              Twitter / X
+            </a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener">
+              Facebook
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener">
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href="mailto:?subject={{ page.title | url_encode }}&body={{ page.url | absolute_url | url_encode }}">
+              Email
+            </a>
+          </li>
+          <li>
+            <button type="button" class="share-copy-btn" data-url="{{ page.url | absolute_url }}">Copy link</button>
+          </li>
+        </ul>
+      </details>
     </div>
     <div class="nav-next">
       {% if page.next.url %}
@@ -46,6 +87,48 @@ layout: default
       {% endif %}
     </div>
   </div>
+
+  <script>
+    (function () {
+      var shareContainer = document.querySelector('.nav-share');
+      if (!shareContainer) return;
+
+      var shareData = {
+        title: shareContainer.getAttribute('data-share-title') || document.title,
+        text: shareContainer.getAttribute('data-share-text') || '',
+        url: shareContainer.getAttribute('data-share-url') || window.location.href
+      };
+
+      var nativeBtn = document.getElementById('share-native');
+      var fallback = document.getElementById('share-fallback');
+
+      if (navigator.share && nativeBtn) {
+        nativeBtn.classList.remove('d-none');
+        nativeBtn.addEventListener('click', function () {
+          navigator.share(shareData).catch(function () {});
+        });
+      } else if (fallback) {
+        fallback.classList.remove('d-none');
+      }
+
+      var copyBtn = document.querySelector('.share-copy-btn');
+      if (!copyBtn) return;
+
+      copyBtn.addEventListener('click', function () {
+        var url = copyBtn.getAttribute('data-url');
+        if (!url) return;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(function () {
+            copyBtn.textContent = 'Link copied!';
+            setTimeout(function () { copyBtn.textContent = 'Copy link'; }, 2000);
+          });
+        } else {
+          window.prompt('Copy this link:', url);
+        }
+      });
+    })();
+  </script>
 
   <!-- Back to Blog -->
   <div class="text-center back-to-blog">
